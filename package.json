@@ -1,11 +1,13 @@
 {
   "name": "code-adventure-levels",
+  "author": "Tikhon Belousov (@it1shka)",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "watch": "ng build --watch --configuration development"
+    "watch": "ng build --watch --configuration development",
+    "format": "prettier --write src"
   },
   "private": true,
   "dependencies": {
@@ -25,6 +27,7 @@
     "@angular-devkit/build-angular": "^18.0.7",
     "@angular/cli": "^18.0.7",
     "@angular/compiler-cli": "^18.0.0",
+    "prettier": "^3.3.3",
     "typescript": "~5.4.2"
   }
 }

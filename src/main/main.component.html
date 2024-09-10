@@ -1,5 +1,10 @@
 <main class="container">
   <nav class="container__inner">
+    <img
+      class="logo"
+      src="/logo.png"
+      alt="Logo"
+    />
     <ul class="links-list">
       @for (item of links; track $index) {
         <li
@@ -16,5 +21,22 @@
         </li>
       }
     </ul>
+    <aside class="link-info">
+      <div class="link-info__header">
+        @if (links[activeLinkIndex].icon) {
+          <img
+            class="link-info__icon"
+            [src]="links[activeLinkIndex].icon"
+            alt="Link icon"
+          />
+        }
+        <h1 class="link-info__title">
+          {{ links[activeLinkIndex].title }}
+        </h1>
+      </div>
+      <p class="link-info__description">
+        {{ links[activeLinkIndex].description }}
+      </p>
+    </aside>
   </nav>
 </main>

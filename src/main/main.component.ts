@@ -24,16 +24,19 @@ export class MainComponent {
     {
       href: '/level/new',
       title: 'New Level',
+      icon: '/create.png',
       description: 'Start creating your own level',
     },
     {
       href: '/library',
       title: 'Library',
+      icon: '/library.png',
       description: 'Collection of levels created by other users',
     },
     {
       href: 'https://github.com/it1shka/code-adventure',
       title: 'GitHub',
+      icon: '/github.png',
       description: 'Project page on the GitHub. Give it a star!',
       external: true,
     },

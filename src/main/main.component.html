@@ -1,0 +1,20 @@
+<main class="container">
+  <nav class="container__inner">
+    <ul class="links-list">
+      @for (item of links; track $index) {
+        <li
+          [ngClass]="{ active: activeLinkIndex === $index }"
+          (mouseenter)="activeLinkIndex = $index"
+        >
+          @if (item.external) {
+            <a [href]="item.href" (click)="openExternalLink($event)">{{
+              item.title
+            }}</a>
+          } @else {
+            <a [routerLink]="item.href">{{ item.title }}</a>
+          }
+        </li>
+      }
+    </ul>
+  </nav>
+</main>

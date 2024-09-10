@@ -2,7 +2,9 @@
   <nav class="container__inner">
     <img
       class="logo"
-      src="/logo.png"
+      ngSrc="/logo.png"
+      width="150"
+      height="150"
       alt="Logo"
     />
     <ul class="links-list">
@@ -26,7 +28,9 @@
         @if (links[activeLinkIndex].icon) {
           <img
             class="link-info__icon"
-            [src]="links[activeLinkIndex].icon"
+            [ngSrc]="links[activeLinkIndex].icon!"
+            width="30"
+            height="30"
             alt="Link icon"
           />
         }

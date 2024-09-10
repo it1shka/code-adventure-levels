@@ -1,4 +1,4 @@
-import { NgClass } from '@angular/common'
+import { NgClass, NgOptimizedImage } from '@angular/common'
 import { Component, HostListener } from '@angular/core'
 import { Router, RouterLink } from '@angular/router'
 
@@ -13,7 +13,11 @@ interface Link {
 @Component({
   selector: 'app-main',
   standalone: true,
-  imports: [RouterLink, NgClass],
+  imports: [
+    RouterLink, 
+    NgClass,
+    NgOptimizedImage,
+  ],
   templateUrl: './main.component.html',
   styleUrl: './main.component.scss',
 })

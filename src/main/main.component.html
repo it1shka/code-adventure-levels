@@ -1,6 +1,6 @@
 <main class="container">
   <nav class="container__inner">
-    <img
+    <img priority
       class="logo"
       ngSrc="/logo.png"
       width="150"
@@ -11,7 +11,7 @@
       @for (item of links; track $index) {
         <li
           [ngClass]="{ active: activeLinkIndex === $index }"
-          (mouseenter)="activeLinkIndex = $index"
+          (mouseenter)="setActiveLinkIndex($index)"
         >
           @if (item.external) {
             <a [href]="item.href" (click)="openExternalLink($event)">{{
@@ -23,7 +23,10 @@
         </li>
       }
     </ul>
-    <aside class="link-info">
+    <aside 
+      class="link-info"
+      [@slideIn]="linkInfoHidden ? 'hidden' : 'active'"
+    >
       <div class="link-info__header">
         @if (links[activeLinkIndex].icon) {
           <img

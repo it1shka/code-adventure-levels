@@ -1,5 +1,7 @@
+import { animate, state, style, transition, trigger } from '@angular/animations'
 import { NgClass, NgOptimizedImage } from '@angular/common'
 import { Component, HostListener } from '@angular/core'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { Router, RouterLink } from '@angular/router'
 
 interface Link {
@@ -20,6 +22,19 @@ interface Link {
   ],
   templateUrl: './main.component.html',
   styleUrl: './main.component.scss',
+  animations: [
+    trigger('slideIn', [
+      state('hidden', style({
+        transform: 'translate(calc(-50% - 10px), -50%)',
+        opacity: 0.3,
+      })),
+      state('active', style({
+        transform: 'translate(-50%, -50%)',
+        opacity: 1,
+      })),
+      transition('hidden => active', animate('100ms ease-in')),
+    ])
+  ],
 })
 export class MainComponent {
   constructor (private router: Router) {}
@@ -47,6 +62,20 @@ export class MainComponent {
   ])
 
   activeLinkIndex = 0
+  linkInfoHidden = false
+
+  private animateLinkInfo = () => {
+    this.linkInfoHidden = true
+    setTimeout(() => {
+      this.linkInfoHidden = false
+    }, 0)
+  }
+
+  setActiveLinkIndex = async (index: number) => {
+    if (this.activeLinkIndex === index) return
+    this.activeLinkIndex = index
+    this.animateLinkInfo()
+  }
 
   openExternalLink = (event: MouseEvent) => {
     event.preventDefault()
@@ -74,6 +103,7 @@ export class MainComponent {
         if (this.activeLinkIndex < 0) {
           this.activeLinkIndex = this.links.length - 1
         }
+        this.animateLinkInfo()
         break
       }
       case 'ArrowDown': {
@@ -81,6 +111,7 @@ export class MainComponent {
         if (this.activeLinkIndex >= this.links.length) {
           this.activeLinkIndex = 0
         }
+        this.animateLinkInfo()
         break
       }
     }

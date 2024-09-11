@@ -3,6 +3,7 @@ import { ApplicationConfig, Component } from '@angular/core'
 import { provideRouter, RouterOutlet, Routes } from '@angular/router'
 import { MainComponent } from './main/main.component'
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async'
+import { LibraryComponent } from './library/library.component'
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,10 @@ import {provideAnimationsAsync} from '@angular/platform-browser/animations/async
 })
 class AppRoot {}
 
-const routes: Routes = [{ path: '', component: MainComponent }]
+const routes: Routes = [
+  { path: '', component: MainComponent },
+  { path: 'library', component: LibraryComponent },
+]
 
 const appConfig: ApplicationConfig = Object.freeze({
   providers: [

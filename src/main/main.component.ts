@@ -1,7 +1,6 @@
 import { animate, state, style, transition, trigger } from '@angular/animations'
 import { NgClass, NgOptimizedImage } from '@angular/common'
 import { Component, HostListener } from '@angular/core'
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { Router, RouterLink } from '@angular/router'
 
 interface Link {

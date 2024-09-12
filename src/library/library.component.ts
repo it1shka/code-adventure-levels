@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core'
 
 @Component({
   selector: 'app-library',
@@ -7,6 +7,4 @@ import { Component } from '@angular/core';
   templateUrl: './library.component.html',
   styleUrl: './library.component.scss',
 })
-export class LibraryComponent {
-
-}
+export class LibraryComponent {}

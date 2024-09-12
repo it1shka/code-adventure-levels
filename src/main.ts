@@ -2,8 +2,10 @@ import { bootstrapApplication } from '@angular/platform-browser'
 import { ApplicationConfig, Component } from '@angular/core'
 import { provideRouter, RouterOutlet, Routes } from '@angular/router'
 import { MainComponent } from './main/main.component'
-import {provideAnimationsAsync} from '@angular/platform-browser/animations/async'
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async'
 import { LibraryComponent } from './library/library.component'
+import { EditorComponent } from './editor/editor.component'
+import {provideHttpClient, withFetch} from '@angular/common/http'
 
 @Component({
   selector: 'app-root',
@@ -16,12 +18,19 @@ class AppRoot {}
 const routes: Routes = [
   { path: '', component: MainComponent },
   { path: 'library', component: LibraryComponent },
+  {
+    path: 'level',
+    children: [
+      { path: 'new', component: EditorComponent, },
+    ],
+  },
 ]
 
 const appConfig: ApplicationConfig = Object.freeze({
   providers: [
-    provideRouter(routes),
+    provideRouter(routes), 
     provideAnimationsAsync(),
+    provideHttpClient(withFetch()),
   ],
 })
 

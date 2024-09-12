@@ -14,29 +14,31 @@ interface Link {
 @Component({
   selector: 'app-main',
   standalone: true,
-  imports: [
-    RouterLink, 
-    NgClass,
-    NgOptimizedImage,
-  ],
+  imports: [RouterLink, NgClass, NgOptimizedImage],
   templateUrl: './main.component.html',
   styleUrl: './main.component.scss',
   animations: [
     trigger('slideIn', [
-      state('hidden', style({
-        transform: 'translate(calc(-50% - 10px), -50%)',
-        opacity: 0.3,
-      })),
-      state('active', style({
-        transform: 'translate(-50%, -50%)',
-        opacity: 1,
-      })),
+      state(
+        'hidden',
+        style({
+          transform: 'translate(calc(-50% - 10px), -50%)',
+          opacity: 0.3,
+        }),
+      ),
+      state(
+        'active',
+        style({
+          transform: 'translate(-50%, -50%)',
+          opacity: 1,
+        }),
+      ),
       transition('hidden => active', animate('100ms ease-in')),
-    ])
+    ]),
   ],
 })
 export class MainComponent {
-  constructor (private router: Router) {}
+  constructor(private router: Router) {}
 
   links: readonly Link[] = Object.freeze([
     {

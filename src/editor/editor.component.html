@@ -1,0 +1,28 @@
+<main class="container">
+  <header class="header">
+    <div class="form-field">
+      <label>Level name: </label>
+      <input
+        placeholder="Your level name: "
+        type="text"
+        [(ngModel)]="levelName"
+        (dblclick)="randomizeLevelName()"
+      />
+    </div>
+    <div class="form-field">
+      <label>Author name: </label>
+      <input
+        placeholder="Author (you): "
+        type="text"
+        [(ngModel)]="authorName"
+        (dblclick)="randomizeAuthorName()"
+      />
+    </div>
+    <button 
+      class="header__randomize"
+      (click)="randomizeNames()"
+    >
+      Randomize
+    </button>
+  </header>
+</main>

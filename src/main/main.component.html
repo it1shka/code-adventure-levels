@@ -1,6 +1,7 @@
 <main class="container">
   <nav class="container__inner">
-    <img priority
+    <img
+      priority
       class="logo"
       ngSrc="/logo.png"
       width="150"
@@ -23,10 +24,7 @@
         </li>
       }
     </ul>
-    <aside 
-      class="link-info"
-      [@slideIn]="linkInfoHidden ? 'hidden' : 'active'"
-    >
+    <aside class="link-info" [@slideIn]="linkInfoHidden ? 'hidden' : 'active'">
       <div class="link-info__header">
         @if (links[activeLinkIndex].icon) {
           <img
@@ -45,8 +43,6 @@
         {{ links[activeLinkIndex].description }}
       </p>
     </aside>
-    <small class="guidance">
-      You can use your arrow keys and enter
-    </small>
+    <small class="guidance"> You can use your arrow keys and enter </small>
   </nav>
 </main>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import {RandomizeNamesService} from './randomize-names.service'
 
@@ -10,11 +10,17 @@ import {RandomizeNamesService} from './randomize-names.service'
   templateUrl: './editor.component.html',
   styleUrl: './editor.component.scss',
 })
-export class EditorComponent {
+export class EditorComponent implements OnInit {
   levelName = ''
   authorName = ''
 
   constructor (private randomize: RandomizeNamesService) {}
+
+  ngOnInit() {
+    this.randomize.error$.subscribe(error => {
+      // TODO: show notification
+    })
+  }
 
   randomizeLevelName = () => {
     this.randomize.randomLevelName().subscribe(newLevelName => {

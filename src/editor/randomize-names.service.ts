@@ -1,10 +1,12 @@
-import { HttpClient } from "@angular/common/http"
+import { HttpClient, HttpErrorResponse } from "@angular/common/http"
 import { Injectable } from "@angular/core"
-import { forkJoin, Observable } from "rxjs"
+import { catchError, forkJoin, Observable, Subject, throwError } from "rxjs"
 import { environment } from "../environment"
 
 @Injectable()
 export class RandomizeNamesService {
+  readonly error$ = new Subject<unknown>()
+
   constructor (private http: HttpClient) {}
 
   randomLevelName(): Observable<string> {
@@ -12,7 +14,10 @@ export class RandomizeNamesService {
     return this.http.get(url, {
       observe: 'body',
       responseType: 'text',
-    })
+    }).pipe(catchError(error => {
+      this.error$.next(error)
+      return throwError(() => new Error('Failed to fetch random level name'))
+    }))
   }
 
   randomAuthorName(): Observable<string> {
@@ -20,7 +25,10 @@ export class RandomizeNamesService {
     return this.http.get(url, {
       observe: 'body',
       responseType: 'text',
-    })
+    }).pipe(catchError(error => {
+      this.error$.next(error)
+      return throwError(() => new Error('Failed to fetch random author name'))
+    }))
   }
 
   randomizeBothNames(): Observable<{ level: string, author: string }> {
@@ -29,4 +37,5 @@ export class RandomizeNamesService {
       author: this.randomAuthorName(),
     })
   }
+
 }

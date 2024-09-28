@@ -1,3 +1,16 @@
-<aside class="notification-container">
-  <!-- TODO: -->
-</aside>
+@if (notification !== null) {
+  <aside [ngClass]="['notification-container', notification.variant, notification.state].join(' ')">
+    <h1 class="notification__title">
+      {{ notification.title }}
+    </h1>
+    <p class="notification__message">
+      {{ notification.message }}
+    </p>
+    @if (notification.state === 'display') {
+      <button 
+        class="notification__close"
+        (click)="onNotificationClose()"
+      ></button>
+    }
+  </aside>
+}

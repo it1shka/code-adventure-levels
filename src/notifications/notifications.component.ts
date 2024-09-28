@@ -1,6 +1,18 @@
 import { Component, OnInit } from '@angular/core'
 import { AppNotification, NotificationsService } from './notifications.service'
-import { concatMap, delay, EMPTY, from, Observable, of } from 'rxjs'
+import {
+  concat,
+  concatMap,
+  EMPTY,
+  from,
+  ignoreElements,
+  Observable,
+  of,
+  Subject,
+  takeUntil,
+  timer,
+} from 'rxjs'
+import { NgClass } from '@angular/common'
 
 const enum NotificationState {
   enter = 'enter',
@@ -8,10 +20,9 @@ const enum NotificationState {
   leave = 'leave',
 }
 
-interface StatefulNotification {
-  notification: AppNotification
+type StatefulNotification = {
   state: NotificationState
-}
+} & AppNotification
 
 const STATE_ORDER: readonly NotificationState[] = Object.freeze([
   NotificationState.enter,
@@ -20,20 +31,21 @@ const STATE_ORDER: readonly NotificationState[] = Object.freeze([
 ])
 
 const STATE_DELAY = Object.freeze({
-  [NotificationState.enter]: 500,
-  [NotificationState.display]: 1500,
-  [NotificationState.leave]: 500,
+  [NotificationState.enter]: 1000,
+  [NotificationState.display]: 3000,
+  [NotificationState.leave]: 1000,
 })
 
 @Component({
   selector: 'app-notifications',
   standalone: true,
-  imports: [],
+  imports: [NgClass],
   templateUrl: './notifications.component.html',
   styleUrl: './notifications.component.scss',
 })
 export class NotificationsComponent implements OnInit {
   private notificationQueue$: Observable<StatefulNotification | null> = EMPTY
+  private closeClick$: Subject<void> = new Subject()
   notification: StatefulNotification | null = null
 
   constructor(private notifications: NotificationsService) {}
@@ -44,7 +56,7 @@ export class NotificationsComponent implements OnInit {
         const withState = STATE_ORDER.map(
           (state) =>
             Object.freeze({
-              notification,
+              ...notification,
               state,
             }) satisfies StatefulNotification,
         )
@@ -54,15 +66,24 @@ export class NotificationsComponent implements OnInit {
               return of(null)
             }
             const currentDelay = STATE_DELAY[stateful.state]
-            return of(stateful).pipe(delay(currentDelay))
+            return concat(
+              of(stateful),
+              timer(currentDelay).pipe(
+                takeUntil(this.closeClick$),
+                ignoreElements(),
+              ),
+            )
           }),
         )
       }),
     )
 
     this.notificationQueue$.subscribe((stateful) => {
-      console.log(stateful)
       this.notification = stateful
     })
+  }
+
+  onNotificationClose = () => {
+    this.closeClick$.next()
   }
 }

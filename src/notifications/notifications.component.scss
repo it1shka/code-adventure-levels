@@ -1,5 +1,73 @@
 .notification-container {
   position: fixed;
-  top: 0;
-  left: 0;
+  top: 0.5em;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  padding: 0.75em 1.25em;
+  box-shadow: var(--shadow);
+  min-width: 400px;
+}
+
+// states
+@keyframes slide-in {
+  from {
+    transform: translate(-50%, -100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(-50%);
+    opacity: 1;
+  }
+}
+
+.notification-container {
+  &.enter {
+    animation: slide-in 0.5s ease-in-out;
+  }
+
+  &.leave {
+    transition: 0.5s all ease-in-out;
+    transform: translate(-50%, calc(-100% - 10px));
+    opacity: 0;
+  }
+}
+
+// variants
+.notification-container {
+  &.info {
+    background-color: var(--primary-light);
+  }
+
+  &.success {
+    background-color: var(--success);
+    color: white;
+  }
+
+  &.warning {
+    background-color: var(--warning);
+  }
+
+  &.error {
+    background-color: var(--error);
+    color: white;
+  }
+}
+
+// close button
+.notification__close {
+  cursor: pointer;
+  position: absolute;
+  top: 0.25em;
+  right: 0.5em;
+  background-color: transparent;
+  border: none;
+  font-size: 1.25em;
+  &::after {
+    color: white;
+    display: block;
+    content: '✕';
+  }
 }

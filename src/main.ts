@@ -5,13 +5,17 @@ import { MainComponent } from './main/main.component'
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async'
 import { LibraryComponent } from './library/library.component'
 import { EditorComponent } from './editor/editor.component'
-import {provideHttpClient, withFetch} from '@angular/common/http'
+import { NotificationsComponent } from './notifications/notifications.component'
+import { provideHttpClient, withFetch } from '@angular/common/http'
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
-  template: `<router-outlet />`,
+  imports: [RouterOutlet, NotificationsComponent],
+  template: `
+    <router-outlet />
+    <app-notifications />
+  `,
 })
 class AppRoot {}
 
@@ -20,15 +24,13 @@ const routes: Routes = [
   { path: 'library', component: LibraryComponent },
   {
     path: 'level',
-    children: [
-      { path: 'new', component: EditorComponent, },
-    ],
+    children: [{ path: 'new', component: EditorComponent }],
   },
 ]
 
 const appConfig: ApplicationConfig = Object.freeze({
   providers: [
-    provideRouter(routes), 
+    provideRouter(routes),
     provideAnimationsAsync(),
     provideHttpClient(withFetch()),
   ],

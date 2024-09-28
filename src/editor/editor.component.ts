@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { FormsModule } from '@angular/forms'
-import {RandomizeNamesService} from './randomize-names.service'
+import { RandomizeNamesService } from './randomize-names.service'
+import { NotificationsService } from '../notifications/notifications.service'
 
 @Component({
   selector: 'app-editor',
@@ -14,22 +15,29 @@ export class EditorComponent implements OnInit {
   levelName = ''
   authorName = ''
 
-  constructor (private randomize: RandomizeNamesService) {}
+  constructor(
+    private randomize: RandomizeNamesService,
+    private notifications: NotificationsService,
+  ) {}
 
   ngOnInit() {
-    this.randomize.error$.subscribe(error => {
-      // TODO: show notification
+    this.randomize.error$.subscribe(() => {
+      this.notifications.pushNotification({
+        title: 'Error',
+        message: 'Failed to randomize',
+        variant: 'error',
+      })
     })
   }
 
   randomizeLevelName = () => {
-    this.randomize.randomLevelName().subscribe(newLevelName => {
+    this.randomize.randomLevelName().subscribe((newLevelName) => {
       this.levelName = newLevelName
     })
   }
 
   randomizeAuthorName = () => {
-    this.randomize.randomAuthorName().subscribe(newAuthorName => {
+    this.randomize.randomAuthorName().subscribe((newAuthorName) => {
       this.authorName = newAuthorName
     })
   }

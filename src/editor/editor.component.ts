@@ -1,19 +1,23 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, HostListener, OnInit } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { RandomizeNamesService } from './randomize-names.service'
 import { NotificationsService } from '../notifications/notifications.service'
+import brushes from './brushes'
+import { NgClass, NgOptimizedImage } from '@angular/common'
 
 @Component({
   selector: 'app-editor',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, NgOptimizedImage, NgClass],
   providers: [RandomizeNamesService],
   templateUrl: './editor.component.html',
   styleUrl: './editor.component.scss',
 })
 export class EditorComponent implements OnInit {
+  readonly brushes = brushes
   levelName = ''
   authorName = ''
+  brushPointer = 0
 
   constructor(
     private randomize: RandomizeNamesService,
@@ -47,5 +51,25 @@ export class EditorComponent implements OnInit {
       this.levelName = level
       this.authorName = author
     })
+  }
+
+  @HostListener('document:keydown', ['$event'])
+  handleKeyboardClick = (event: KeyboardEvent) => {
+    switch (event.key) {
+      case 'ArrowLeft': {
+        this.brushPointer =
+          this.brushPointer <= 0
+            ? this.brushes.length - 1
+            : this.brushPointer - 1
+        break
+      }
+      case 'ArrowRight': {
+        this.brushPointer =
+          this.brushPointer + 1 >= this.brushes.length
+            ? 0
+            : this.brushPointer + 1
+        break
+      }
+    }
   }
 }

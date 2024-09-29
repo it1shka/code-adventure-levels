@@ -45,3 +45,38 @@
     color: #ccc;
   }
 }
+
+.editor-container {
+  flex: 1;
+}
+
+.footer {
+  padding: 0.5em 1em;
+  background-color: white;
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  .brush {
+    padding: 0.5em;
+    cursor: pointer;
+    height: 100%;
+    border-radius: 8px;
+    min-width: 100px;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.5em;
+    &:hover {
+      background-color: #eee;
+    }
+    small {
+      color: grey;
+    }
+    &.chosen {
+      background-color: #ddd;
+    }
+  }
+}

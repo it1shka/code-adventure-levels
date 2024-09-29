@@ -1,4 +1,4 @@
-<main class="container">
+<div class="container">
   <header class="header">
     <div class="form-field">
       <label>Level name: </label>
@@ -22,4 +22,29 @@
       Randomize
     </button>
   </header>
-</main>
+
+  <main class="editor-container">
+
+  </main>
+
+  <footer class="footer">
+    @for (brush of brushes; track brush.name) {
+      <div [ngClass]="{
+        brush: true,
+        chosen: brushPointer === $index,
+      }" (click)="brushPointer = $index">
+        <small>
+          {{ brush.name }}
+        </small>
+        @if (brush.icon !== undefined) {
+          <img
+            [alt]="brush.name"
+            [ngSrc]="brush.icon"
+            width="40"
+            height="40"
+          />
+        }
+      </div>
+    }
+  </footer>
+</div>

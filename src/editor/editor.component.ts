@@ -70,6 +70,13 @@ export class EditorComponent implements OnInit {
             : this.brushPointer + 1
         break
       }
+      default: {
+        if (event.key < '1' || event.key > '9') return
+        const idx = Number(event.key) - 1
+        if (!Number.isFinite(idx)) return
+        if (idx >= this.brushes.length) return
+        this.brushPointer = idx
+      }
     }
   }
 }

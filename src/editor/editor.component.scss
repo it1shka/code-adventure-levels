@@ -47,7 +47,22 @@
 }
 
 .editor-container {
+  position: relative;
   flex: 1;
+  .level-size {
+    position: absolute;
+    top: 0.5em;
+    right: 0.5em;
+    padding: 1em;
+    background-color: white;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    input {
+      min-width: 200px;
+    }
+  }
 }
 
 .footer {

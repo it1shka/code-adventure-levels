@@ -18,6 +18,8 @@ export class EditorComponent implements OnInit {
   levelName = ''
   authorName = ''
   brushPointer = 0
+  levelWidth = 10
+  levelHeight = 10
 
   constructor(
     private randomize: RandomizeNamesService,
@@ -71,10 +73,12 @@ export class EditorComponent implements OnInit {
         break
       }
       default: {
+        if (!event.ctrlKey) return
         if (event.key < '1' || event.key > '9') return
         const idx = Number(event.key) - 1
         if (!Number.isFinite(idx)) return
         if (idx >= this.brushes.length) return
+        event.preventDefault()
         this.brushPointer = idx
       }
     }

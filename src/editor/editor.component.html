@@ -24,25 +24,44 @@
   </header>
 
   <main class="editor-container">
-
+    <aside class="level-size">
+      <div class="form-field">
+        <label>Level width: </label>
+        <input
+          placeholder="Level width: "
+          type="number"
+          min="5"
+          max="20"
+          [(ngModel)]="levelWidth"
+        />
+      </div>
+      <div class="form-field">
+        <label>Level height: </label>
+        <input
+          placeholder="Level height: "
+          type="number"
+          min="5"
+          max="20"
+          [(ngModel)]="levelHeight"
+        />
+      </div>
+    </aside>
   </main>
 
   <footer class="footer">
     @for (brush of brushes; track brush.name) {
-      <div [ngClass]="{
-        brush: true,
-        chosen: brushPointer === $index,
-      }" (click)="brushPointer = $index">
+      <div
+        [ngClass]="{
+          brush: true,
+          chosen: brushPointer === $index
+        }"
+        (click)="brushPointer = $index"
+      >
         <small>
           {{ brush.name }}
         </small>
         @if (brush.icon !== undefined) {
-          <img
-            [alt]="brush.name"
-            [ngSrc]="brush.icon"
-            width="40"
-            height="40"
-          />
+          <img [alt]="brush.name" [ngSrc]="brush.icon" width="40" height="40" />
         }
       </div>
     }

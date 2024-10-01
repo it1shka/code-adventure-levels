@@ -1,3 +1,13 @@
+@if (brushIcon) {
+  <aside class="artificial-cursor" [style]="artificialCursorPositionStyle">
+    <img
+      [ngSrc]="brushIcon"
+      width="25"
+      height="25"
+    />
+  </aside>
+}
+
 <div class="container">
   <header class="header">
     <div class="form-field">

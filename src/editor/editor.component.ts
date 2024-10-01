@@ -5,6 +5,11 @@ import { NotificationsService } from '../notifications/notifications.service'
 import brushes from './brushes'
 import { NgClass, NgOptimizedImage } from '@angular/common'
 
+type MousePosition = Readonly<{
+  x: number
+  y: number
+}>
+
 @Component({
   selector: 'app-editor',
   standalone: true,
@@ -26,6 +31,7 @@ export class EditorComponent implements OnInit {
   levelWidth = 10
   levelHeight = 10
   scale = 40
+  mousePosition: MousePosition = Object.freeze({ x: 0, y: 0 })
 
   constructor(
     private randomize: RandomizeNamesService,
@@ -122,5 +128,28 @@ export class EditorComponent implements OnInit {
       width: `${actualScale}px`,
       height: `${actualScale}px`,
     })
+  }
+
+  @HostListener('document:mousemove', ['$event'])
+  handleMouseMove = ({ clientX, clientY }: MouseEvent) => {
+    this.mousePosition = Object.freeze({
+      x: clientX,
+      y: clientY,
+    })
+  }
+
+  get artificialCursorPositionStyle() {
+    const offset = 10
+    return Object.freeze({
+      position: 'fixed',
+      'z-index': 100,
+      top: `${this.mousePosition.y + offset}px`,
+      left: `${this.mousePosition.x + offset}px`,
+    })
+  }
+
+  get brushIcon() {
+    const brush = this.brushes[this.brushPointer]
+    return brush.icon
   }
 }

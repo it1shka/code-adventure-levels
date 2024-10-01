@@ -49,6 +49,8 @@
 .editor-container {
   position: relative;
   flex: 1;
+  display: grid;
+  place-items: center;
   .level-size {
     position: absolute;
     top: 0.5em;
@@ -93,5 +95,23 @@
     &.chosen {
       background-color: #ddd;
     }
+  }
+}
+
+.field {
+  .cell {
+    background-color: black;
+    width: 40px;
+    height: 40px;
+  }
+}
+
+.warning {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5em;
+  h1 {
+    color: grey;
   }
 }

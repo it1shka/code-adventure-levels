@@ -15,6 +15,8 @@ import { NgClass, NgOptimizedImage } from '@angular/common'
 })
 export class EditorComponent implements OnInit {
   readonly brushes = brushes
+  readonly minSize = 5
+  readonly maxSize = 20
   levelName = ''
   authorName = ''
   brushPointer = 0
@@ -82,5 +84,31 @@ export class EditorComponent implements OnInit {
         this.brushPointer = idx
       }
     }
+  }
+
+  isLevelSizeValid = () => {
+    if (!Number.isFinite(this.levelWidth) || !Number.isFinite(this.levelHeight)) {
+      return false
+    }
+    if (this.levelWidth < this.minSize || this.levelWidth > this.maxSize) {
+      return false
+    }
+    if (this.levelHeight < this.minSize || this.levelHeight > this.maxSize) {
+      return false
+    }
+    return true
+  }
+
+  get levelSizeErrorMessage() {
+    if (!Number.isFinite(this.levelWidth) || !Number.isFinite(this.levelHeight)) {
+      return 'Level width or height are not numbers'
+    }
+    if (this.levelWidth < this.minSize || this.levelWidth > this.maxSize) {
+      return `Level width should be between ${this.minSize} and ${this.maxSize}`
+    }
+    if (this.levelHeight < this.minSize || this.levelHeight > this.maxSize) {
+      return `Level height should be between ${this.minSize} and ${this.maxSize}`
+    }
+    return 'Everything is alright'
   }
 }

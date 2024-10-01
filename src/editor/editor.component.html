@@ -30,8 +30,8 @@
         <input
           placeholder="Level width: "
           type="number"
-          min="5"
-          max="20"
+          [min]="minSize"
+          [max]="maxSize"
           [(ngModel)]="levelWidth"
         />
       </div>
@@ -40,12 +40,35 @@
         <input
           placeholder="Level height: "
           type="number"
-          min="5"
-          max="20"
+          [min]="minSize"
+          [max]="maxSize"
           [(ngModel)]="levelHeight"
         />
       </div>
     </aside>
+    @if (isLevelSizeValid()) {
+      <div class="field" [style]="{
+        display: 'grid',
+        'grid-template-rows': 'repeat(' + levelHeight + ', 1fr)',
+        'grid-template-columns': 'repeat(' + levelWidth + ', 1fr)',
+        gap: '2px',
+      }">
+        @for (_ of [].constructor(levelHeight); let row = $index; track row) {
+          @for (_ of [].constructor(levelWidth); let column = $index; track column) {
+            <div class="cell"></div>
+          }
+        }
+      </div>
+    } @else {
+      <div class="warning">
+        <img priority
+          width="150"
+          height="150"
+          ngSrc="/warning-sign.png"
+        />
+        <h1>{{ levelSizeErrorMessage }}</h1>
+      </div>
+    }
   </main>
 
   <footer class="footer">

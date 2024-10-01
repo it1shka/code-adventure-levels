@@ -2,13 +2,17 @@ import { Component, HostListener, OnInit } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { RandomizeNamesService } from './randomize-names.service'
 import { NotificationsService } from '../notifications/notifications.service'
-import brushes from './brushes'
+import brushes, {Brush} from './brushes'
 import { NgClass, NgOptimizedImage } from '@angular/common'
 
 type MousePosition = Readonly<{
   x: number
   y: number
 }>
+
+type LevelField = {
+  [position: string]: Brush
+}
 
 @Component({
   selector: 'app-editor',
@@ -32,6 +36,7 @@ export class EditorComponent implements OnInit {
   levelHeight = 10
   scale = 40
   mousePosition: MousePosition = Object.freeze({ x: 0, y: 0 })
+  levelField: LevelField = {}
 
   constructor(
     private randomize: RandomizeNamesService,
@@ -150,6 +155,24 @@ export class EditorComponent implements OnInit {
 
   get brushIcon() {
     const brush = this.brushes[this.brushPointer]
+    return brush.icon
+  }
+
+  handleBrushClick = (row: number, column: number) => {
+    const brush = this.brushes[this.brushPointer]
+    const position = `${row};${column}`
+    this.levelField[position] = brush
+  }
+
+  getIconAt = (row: number, column: number) => {
+    const position = `${row};${column}`
+    if (!(position in this.levelField)) {
+      return null
+    }
+    const brush = this.levelField[position]
+    if (brush.icon === undefined) {
+      return null
+    }
     return brush.icon
   }
 }

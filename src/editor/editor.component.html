@@ -76,7 +76,15 @@
       }">
         @for (_ of [].constructor(levelHeight); let row = $index; track row) {
           @for (_ of [].constructor(levelWidth); let column = $index; track column) {
-            <div class="cell" [style]="cellSizeStyle"></div>
+            <div class="cell" [style]="cellSizeStyle" (click)="handleBrushClick(row, column)">
+              @if (getIconAt(row, column) !== null) {
+                <img
+                  [src]="getIconAt(row, column)!"
+                  [width]="scale"
+                  [height]="scale"
+                />
+              }
+            </div>
           }
         }
       </div>

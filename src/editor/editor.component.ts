@@ -17,11 +17,15 @@ export class EditorComponent implements OnInit {
   readonly brushes = brushes
   readonly minSize = 5
   readonly maxSize = 20
+  readonly minScale = 20
+  readonly maxScale = 60
+
   levelName = ''
   authorName = ''
   brushPointer = 0
   levelWidth = 10
   levelHeight = 10
+  scale = 40
 
   constructor(
     private randomize: RandomizeNamesService,
@@ -86,7 +90,7 @@ export class EditorComponent implements OnInit {
     }
   }
 
-  isLevelSizeValid = () => {
+  get isLevelSizeValid() {
     if (!Number.isFinite(this.levelWidth) || !Number.isFinite(this.levelHeight)) {
       return false
     }
@@ -110,5 +114,13 @@ export class EditorComponent implements OnInit {
       return `Level height should be between ${this.minSize} and ${this.maxSize}`
     }
     return 'Everything is alright'
+  }
+
+  get cellSizeStyle() {
+    const actualScale = Math.max(this.minScale, Math.min(this.maxScale, this.scale))
+    return Object.freeze({
+      width: `${actualScale}px`,
+      height: `${actualScale}px`,
+    })
   }
 }

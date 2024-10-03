@@ -25,11 +25,13 @@ export class EditorComponent implements OnInit {
 
   levelName = ''
   authorName = ''
-  brushPointer = 0
   levelWidth = 10
   levelHeight = 10
   scale = 40
+  brushPointer = 0
   levelField: LevelField = {}
+  private isDrawing = false
+  private previousFieldStates: LevelField[] = []
 
   constructor(
     private randomize: RandomizeNamesService,
@@ -82,6 +84,12 @@ export class EditorComponent implements OnInit {
             : this.brushPointer + 1
         break
       }
+      case 'z':
+        if (!event.metaKey) break
+        const prevState = this.previousFieldStates.pop()
+        if (prevState === undefined) break
+        this.levelField = prevState
+        break
       default: {
         if (!event.ctrlKey) return
         if (event.key < '1' || event.key > '9') return
@@ -142,12 +150,6 @@ export class EditorComponent implements OnInit {
     return brush.icon
   }
 
-  handleBrushClick = (row: number, column: number) => {
-    const brush = this.brushes[this.brushPointer]
-    const position = `${row};${column}`
-    this.levelField[position] = brush
-  }
-
   getIconAt = (row: number, column: number) => {
     const position = `${row};${column}`
     if (!(position in this.levelField)) {
@@ -158,5 +160,28 @@ export class EditorComponent implements OnInit {
       return null
     }
     return brush.icon
+  }
+
+  private colorCell = (row: number, column: number) => {
+    const brush = this.brushes[this.brushPointer]
+    const position = `${row};${column}`
+    this.levelField[position] = brush
+  }
+
+  startDraw = (row: number, column: number) => {
+    const clone = JSON.parse(JSON.stringify(this.levelField))
+    this.previousFieldStates.push(clone as LevelField)
+    this.isDrawing = true
+    this.colorCell(row, column)
+  }
+
+  handleDragBrush = (row: number, column: number) => {
+    if (!this.isDrawing) return
+    this.colorCell(row, column)
+  }
+
+  @HostListener('document:mouseup')
+  finishDraw = () => {
+    this.isDrawing = false
   }
 }

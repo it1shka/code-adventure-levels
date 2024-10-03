@@ -77,7 +77,8 @@
             <div
               class="cell"
               [style]="cellSizeStyle"
-              (click)="handleBrushClick(row, column)"
+              (mousedown)="startDraw(row, column)"
+              (mousemove)="handleDragBrush(row, column)"
             >
               @if (getIconAt(row, column) !== null) {
                 <img

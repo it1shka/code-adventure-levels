@@ -4,20 +4,14 @@ import { RandomizeNamesService } from './randomize-names.service'
 import { NotificationsService } from '../notifications/notifications.service'
 import brushes, {Brush} from './brushes'
 import { NgClass, NgOptimizedImage } from '@angular/common'
+import {CursorComponent} from './cursor.component'
 
-type MousePosition = Readonly<{
-  x: number
-  y: number
-}>
-
-type LevelField = {
-  [position: string]: Brush
-}
+type LevelField = { [position: string]: Brush }
 
 @Component({
   selector: 'app-editor',
   standalone: true,
-  imports: [FormsModule, NgOptimizedImage, NgClass],
+  imports: [FormsModule, NgOptimizedImage, NgClass, CursorComponent],
   providers: [RandomizeNamesService],
   templateUrl: './editor.component.html',
   styleUrl: './editor.component.scss',
@@ -35,7 +29,6 @@ export class EditorComponent implements OnInit {
   levelWidth = 10
   levelHeight = 10
   scale = 40
-  mousePosition: MousePosition = Object.freeze({ x: 0, y: 0 })
   levelField: LevelField = {}
 
   constructor(
@@ -132,24 +125,6 @@ export class EditorComponent implements OnInit {
     return Object.freeze({
       width: `${actualScale}px`,
       height: `${actualScale}px`,
-    })
-  }
-
-  @HostListener('document:mousemove', ['$event'])
-  handleMouseMove = ({ clientX, clientY }: MouseEvent) => {
-    this.mousePosition = Object.freeze({
-      x: clientX,
-      y: clientY,
-    })
-  }
-
-  get artificialCursorPositionStyle() {
-    const offset = 10
-    return Object.freeze({
-      position: 'fixed',
-      'z-index': 100,
-      top: `${this.mousePosition.y + offset}px`,
-      left: `${this.mousePosition.x + offset}px`,
     })
   }
 

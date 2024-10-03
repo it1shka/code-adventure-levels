@@ -2,9 +2,9 @@ import { Component, HostListener, OnInit } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { RandomizeNamesService } from './randomize-names.service'
 import { NotificationsService } from '../notifications/notifications.service'
-import brushes, {Brush} from './brushes'
+import brushes, { Brush } from './brushes'
 import { NgClass, NgOptimizedImage } from '@angular/common'
-import {CursorComponent} from './cursor.component'
+import { CursorComponent } from './cursor.component'
 
 type LevelField = { [position: string]: Brush }
 
@@ -95,7 +95,10 @@ export class EditorComponent implements OnInit {
   }
 
   get isLevelSizeValid() {
-    if (!Number.isFinite(this.levelWidth) || !Number.isFinite(this.levelHeight)) {
+    if (
+      !Number.isFinite(this.levelWidth) ||
+      !Number.isFinite(this.levelHeight)
+    ) {
       return false
     }
     if (this.levelWidth < this.minSize || this.levelWidth > this.maxSize) {
@@ -108,7 +111,10 @@ export class EditorComponent implements OnInit {
   }
 
   get levelSizeErrorMessage() {
-    if (!Number.isFinite(this.levelWidth) || !Number.isFinite(this.levelHeight)) {
+    if (
+      !Number.isFinite(this.levelWidth) ||
+      !Number.isFinite(this.levelHeight)
+    ) {
       return 'Level width or height are not numbers'
     }
     if (this.levelWidth < this.minSize || this.levelWidth > this.maxSize) {
@@ -121,7 +127,10 @@ export class EditorComponent implements OnInit {
   }
 
   get cellSizeStyle() {
-    const actualScale = Math.max(this.minScale, Math.min(this.maxScale, this.scale))
+    const actualScale = Math.max(
+      this.minScale,
+      Math.min(this.maxScale, this.scale),
+    )
     return Object.freeze({
       width: `${actualScale}px`,
       height: `${actualScale}px`,

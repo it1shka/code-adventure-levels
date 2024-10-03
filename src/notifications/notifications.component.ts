@@ -45,7 +45,7 @@ const STATE_DELAY = Object.freeze({
 })
 export class NotificationsComponent implements OnInit {
   private notificationQueue$: Observable<StatefulNotification | null> = EMPTY
-  private closeClick$: Subject<void> = new Subject()
+  private closeClick$ = new Subject<void>()
   notification: StatefulNotification | null = null
 
   constructor(private notifications: NotificationsService) {}

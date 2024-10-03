@@ -1,5 +1,5 @@
-import {NgOptimizedImage} from "@angular/common";
-import {Component, HostListener, Input} from "@angular/core";
+import { NgOptimizedImage } from '@angular/common'
+import { Component, HostListener, Input } from '@angular/core'
 
 type MousePosition = Readonly<{
   x: number
@@ -12,15 +12,8 @@ type MousePosition = Readonly<{
   standalone: true,
   template: `
     @if (cursorIcon) {
-      <aside 
-        class="artificial-cursor"
-        [style]="cursorStyle"
-      >
-        <img
-          [ngSrc]="cursorIcon"
-          width="25"
-          height="25"
-        />
+      <aside class="artificial-cursor" [style]="cursorStyle">
+        <img [ngSrc]="cursorIcon" width="25" height="25" />
       </aside>
     }
   `,

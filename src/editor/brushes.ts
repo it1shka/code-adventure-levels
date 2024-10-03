@@ -1,6 +1,6 @@
 export interface Brush {
   name: string
-  icon?: string 
+  icon?: string
   brush: string
 }
 

@@ -5,9 +5,9 @@ import { NotificationsService } from '../notifications/notifications.service'
 import brushes, { Brush } from './brushes'
 import { NgClass, NgOptimizedImage } from '@angular/common'
 import { CursorComponent } from './cursor.component'
-import {CreateLevelService, Level} from './create-level.service'
-import {catchError, tap, throwError} from 'rxjs'
-import {Router} from '@angular/router'
+import { CreateLevelService, Level } from './create-level.service'
+import { catchError, tap, throwError } from 'rxjs'
+import { Router } from '@angular/router'
 
 type LevelField = { [position: string]: Brush }
 
@@ -66,35 +66,42 @@ export class EditorComponent implements OnInit {
       this.notifications.pushNotification({
         variant: 'error',
         title: 'Error',
-        message: 'Level name and author name should be at least 4 characters long',
+        message:
+          'Level name and author name should be at least 4 characters long',
       })
       return
     }
     const level: Level = {
       title: this.levelName,
       author: this.authorName,
-      field: this.createLevel.buildLevel(this.levelWidth, this.levelHeight, this.levelField)
+      field: this.createLevel.buildLevel(
+        this.levelWidth,
+        this.levelHeight,
+        this.levelField,
+      ),
     }
-    this.createLevel.createLevel(level).pipe(
-      tap(() => {
-        this.notifications.pushNotification({
-          variant: 'success',
-          title: 'Success',
-          message: 'Level was published'
-        })
-        this.router.navigate(['/'])
-      }),
-      catchError(error => {
-        this.notifications.pushNotification({
-          variant: 'error',
-          title: 'Error',
-          message: error instanceof Error
-            ? error.message
-            : 'Failed to create level'
-        })
-        return throwError(() => new Error('Failed to create level'))
-      }),
-    ).subscribe()
+    this.createLevel
+      .createLevel(level)
+      .pipe(
+        tap(() => {
+          this.notifications.pushNotification({
+            variant: 'success',
+            title: 'Success',
+            message: 'Level was published',
+          })
+          this.router.navigate(['/'])
+        }),
+        catchError((error) => {
+          this.notifications.pushNotification({
+            variant: 'error',
+            title: 'Error',
+            message:
+              error instanceof Error ? error.message : 'Failed to create level',
+          })
+          return throwError(() => new Error('Failed to create level'))
+        }),
+      )
+      .subscribe()
   }
 
   randomizeLevelName = () => {

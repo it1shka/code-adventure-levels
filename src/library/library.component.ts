@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core'
 import { Level, ListLevelsService } from './list-levels.service'
 import { NotificationsService } from '../notifications/notifications.service'
 import { FormsModule } from '@angular/forms'
+import {LevelCardComponent} from './level-card.component'
 
 @Component({
   selector: 'app-library',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, LevelCardComponent],
   providers: [ListLevelsService],
   templateUrl: './library.component.html',
   styleUrl: './library.component.scss',
@@ -16,7 +17,7 @@ export class LibraryComponent implements OnInit {
   page = 0
   pageSize = 25
   pageCount: number | null = null
-  levels: Level[] | null = null
+  levels: Level[] = []
 
   constructor(
     private listLevels: ListLevelsService,

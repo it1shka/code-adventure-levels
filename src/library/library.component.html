@@ -1,4 +1,4 @@
-<main class="container">
+<div class="container">
   <header class="header">
     <input
       [(ngModel)]="search"
@@ -7,4 +7,14 @@
     />
     <button class="header__button">Search</button>
   </header>
-</main>
+
+  <main class="level-container">
+    @for (level of levels; track level.id) {
+      <level-card [level-info]="level" />
+    } @empty {
+      <div class="empty">
+        No levels were fetched yet
+      </div>
+    }
+  </main>
+</div>

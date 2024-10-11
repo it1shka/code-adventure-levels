@@ -45,3 +45,24 @@
     color: grey;
   }
 }
+
+.pagination {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  padding: 0.5em;
+  & > div {
+    user-select: none;
+    cursor: pointer;
+    text-align: center;
+    width: 30px; height: 30px;
+    padding: 0.5em;
+    box-shadow: var(--shadow);
+    &.active {
+      color: white;
+      background-color: orange;
+    }
+  }
+}

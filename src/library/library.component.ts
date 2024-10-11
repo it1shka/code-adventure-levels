@@ -3,16 +3,18 @@ import { Level, ListLevelsService } from './list-levels.service'
 import { NotificationsService } from '../notifications/notifications.service'
 import { FormsModule } from '@angular/forms'
 import {LevelCardComponent} from './level-card.component'
+import {NgClass} from '@angular/common'
 
 @Component({
   selector: 'app-library',
   standalone: true,
-  imports: [FormsModule, LevelCardComponent],
+  imports: [FormsModule, LevelCardComponent, NgClass],
   providers: [ListLevelsService],
   templateUrl: './library.component.html',
   styleUrl: './library.component.scss',
 })
 export class LibraryComponent implements OnInit {
+  private readonly paginationRange = 3
   search = ''
   page = 0
   pageSize = 25
@@ -56,5 +58,16 @@ export class LibraryComponent implements OnInit {
       .subscribe((levels) => {
         this.levels = levels
       })
+  }
+
+  get pagination() {
+    if (this.pageCount === null) return []
+    const output = []
+    let page = Math.max(0, this.page - this.paginationRange)
+    while (page < this.pageCount && page <= this.page + this.paginationRange) {
+      output.push(page)
+      page++
+    }
+    return output
   }
 }

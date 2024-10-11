@@ -12,9 +12,15 @@
     @for (level of levels; track level.id) {
       <level-card [level-info]="level" />
     } @empty {
-      <div class="empty">
-        No levels were fetched yet
-      </div>
+      <div class="empty">No levels were fetched yet</div>
     }
   </main>
+
+  @if (pageCount) {
+    <footer class="pagination">
+      @for (p of pagination; track p) {
+        <div [ngClass]="{ active: page === p }" (click)="page = p">{{ p }}</div>
+      }
+    </footer>
+  }
 </div>
